@@ -1,0 +1,267 @@
+{
+  "id": "102019ac98f66c17ed09c08582987cfae35",
+  "version": "102019acae7a686722a97950c130aec065f",
+  "schema": {
+    "name": "calculation_history",
+    "description": "Stores advertising frequency calculation records.",
+    "fields": [
+      {
+        "name": "id",
+        "description": "Unique identifier for each data of this entity.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Internal unique identifier."
+        }
+      },
+      {
+        "name": "data_creator",
+        "description": "id of the user who creates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Internal user tracking identifier."
+        }
+      },
+      {
+        "name": "data_updater",
+        "description": "id of the user who updates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Internal user tracking identifier."
+        }
+      },
+      {
+        "name": "create_time",
+        "description": "create time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Internal audit trail."
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "update_time",
+        "description": "update time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Internal audit trail."
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "calculation_time",
+        "description": "Timestamp of the calculation event in 10-digit unix string.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Core business data for historical records."
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "mode",
+        "description": "The mode used for calculation, either manual or AI.",
+        "type": 100,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Indicates the method of calculation."
+        },
+        "enumeration": [
+          {
+            "value": "Unspecified"
+          },
+          {
+            "number": 1,
+            "value": "Manual"
+          },
+          {
+            "number": 2,
+            "value": "AI"
+          }
+        ]
+      },
+      {
+        "name": "brand_name",
+        "description": "Name of the brand, applicable in AI mode.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "Contains potentially confidential client brand information."
+        },
+        "nullable": true
+      },
+      {
+        "name": "budget",
+        "description": "Campaign budget, applicable in AI mode.",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "Contains confidential client financial information."
+        },
+        "nullable": true,
+        "numeric": "float"
+      },
+      {
+        "name": "campaign_goal",
+        "description": "The goal of the campaign, applicable in AI mode.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "Contains potentially confidential client campaign strategy."
+        },
+        "nullable": true
+      },
+      {
+        "name": "brand_awareness",
+        "description": "Parameter representing brand awareness, ranging from -2.0 to 2.0.",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Input parameter for calculation model."
+        },
+        "taxonomy": {
+          "category": "Calculation Parameter",
+          "subject": "Brand"
+        },
+        "minimum": -2,
+        "numeric": "float"
+      },
+      {
+        "name": "market_saturation",
+        "description": "Parameter representing market saturation, ranging from -2.0 to 2.0.",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Input parameter for calculation model."
+        },
+        "taxonomy": {
+          "category": "Calculation Parameter",
+          "subject": "Market"
+        },
+        "minimum": -2,
+        "numeric": "float"
+      },
+      {
+        "name": "campaign_goal_param",
+        "description": "Numeric parameter representing the campaign goal, ranging from -2.0 to 2.0.",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Input parameter for calculation model."
+        },
+        "taxonomy": {
+          "category": "Calculation Parameter",
+          "subject": "Campaign"
+        },
+        "minimum": -2,
+        "numeric": "float"
+      },
+      {
+        "name": "target_audience",
+        "description": "Parameter representing the target audience, ranging from -2.0 to 2.0.",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Input parameter for calculation model."
+        },
+        "taxonomy": {
+          "category": "Calculation Parameter",
+          "subject": "Audience"
+        },
+        "minimum": -2,
+        "numeric": "float"
+      },
+      {
+        "name": "product_complexity",
+        "description": "Parameter representing product complexity, ranging from -2.0 to 2.0.",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Input parameter for calculation model."
+        },
+        "taxonomy": {
+          "category": "Calculation Parameter",
+          "subject": "Product"
+        },
+        "minimum": -2,
+        "numeric": "float"
+      },
+      {
+        "name": "message_complexity",
+        "description": "Parameter representing message complexity, ranging from -2.0 to 2.0.",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Input parameter for calculation model."
+        },
+        "taxonomy": {
+          "category": "Calculation Parameter",
+          "subject": "Message"
+        },
+        "minimum": -2,
+        "numeric": "float"
+      },
+      {
+        "name": "calculated_frequency",
+        "description": "The final calculated advertising frequency, from 1.0 to 15.0.",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Output result of the calculation model."
+        },
+        "taxonomy": {
+          "category": "Calculation Result",
+          "subject": "Frequency"
+        },
+        "minimum": 1,
+        "numeric": "float"
+      }
+    ],
+    "indexes": [
+      {
+        "fields": [
+          "id"
+        ],
+        "unique": true,
+        "primary": true,
+        "order": false
+      },
+      {
+        "fields": [
+          "data_creator"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_updater"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "calculation_time",
+          "data_creator"
+        ],
+        "order": true
+      }
+    ]
+  },
+  "task": {
+    "id": "6929b4093eae0296d77f081a",
+    "root": "69295b334865aaabce3c1a3e",
+    "project": "69295b334865aaabce3c1a3d",
+    "user": "2821c330-30f1-706c-4b92-c6392c19fa10"
+  },
+  "namespace": {
+    "id": "01987547fc6c72ecb453bd2736bd4ea0",
+    "tenant": 2,
+    "name": "global-1",
+    "default": true
+  },
+  "revision": 1
+}
